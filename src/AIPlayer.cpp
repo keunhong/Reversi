@@ -12,6 +12,10 @@
 #include "Gameboard.h"
 #include "AIPlayer.h"
 
+/*
+ * AIPlayer()
+ *  Constructor for AIPlayer
+ */
 AIPlayer::AIPlayer(Reversi &game, int player, bool dump_info) {
 	this->game = &game;
 	this->corner_value = 3;
@@ -19,6 +23,11 @@ AIPlayer::AIPlayer(Reversi &game, int player, bool dump_info) {
 	return;
 }
 
+/*
+ * rate_move()
+ *  rates how good a move is
+ *
+ */
 int AIPlayer::rate_move(int x, int y) const{
 	int eval = 0;
 	// return if coordinates are off the board
@@ -53,6 +62,11 @@ int AIPlayer::rate_move(int x, int y) const{
 	return eval;
 }
 
+/*
+ * play()
+ *  starts playing
+ *
+ */
 void AIPlayer::play(){
 	int x = 0,y = 0, cur_max = 0, best_x = 0, best_y = 0, temp = 0, rand_n = 0;
 	srand(time(NULL));
@@ -82,6 +96,11 @@ void AIPlayer::play(){
 	this->game->make_move(best_x,best_y,this->player);
 }
 
+/*
+ * set_player()
+ *  sets player
+ *
+ */
 void AIPlayer::set_player(int player){ this->player = player; }
 
 AIPlayer::~AIPlayer() {

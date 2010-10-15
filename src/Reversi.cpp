@@ -28,12 +28,21 @@ using namespace std;
 //#define max(x,y) ( ((x)>(y))?x:y )
 //#define max4(p,q,r,s) ( max(( max(p,q)>max(r,s) ))  )
 
+/*
+ * Function prototypes
+ *
+ */
 int get_board_size();
 int select_player();
 int select_play_mode();
 void play_against(int size);
 void play_ai(int size);
 void play_ai_to_ai(int size);
+
+/*
+ * Main function
+ *
+ */
 int main(int argc, char * argv[]) {
 	std::cout << "   ______________________   _________________________  _________.___" << std::endl
 			  << "\\______   \\_   _____/\\   \\ /   /\\_   _____/\\______   \\/   _____/|   |" << std::endl
@@ -92,6 +101,10 @@ int main(int argc, char * argv[]) {
 	return 0;
 }
 
+/*
+ * Input/output functions
+ *
+ */
 int get_board_size(){
 	while(true){
 		printf("[>>] Input size of board: ");

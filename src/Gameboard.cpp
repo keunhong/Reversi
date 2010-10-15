@@ -12,6 +12,12 @@
 // the line above will be used in every function to make the program
 // idiot-proof
 
+/*
+ * Reversi()
+ *  Constructor for the game board.
+ *  Takes size and initializes game board.
+ *
+ */
 Reversi::Reversi(int size){
 	if(size < 3) return;
 
@@ -40,15 +46,30 @@ Reversi::Reversi(int size){
 	this->set_slot(size/2, size/2 - 1, 2);
 }
 
+/*
+ * get_slot_status()
+ *  Takes coordinate and return the status of the slot
+ *
+ */
 int Reversi::get_slot_status(int x, int y) const{
 	if(x >= this->size || y >= this->size || x < 0 || y < 0){ return 0; }
 	return this->gameboard[x][y];
 }
 
+/*
+ * get_size()
+ *  returns size of gameboard
+ *
+ */
 int Reversi::get_size() const{
 	return this->size;
 }
 
+/*
+ * is_valid_move()
+ *  returns whether a move is valid
+ *
+ */
 bool Reversi::is_valid_move(int x, int y, int player) const{
 	if(x >= this->size || y >= this->size || x < 0 || y < 0){ return 0; }
 	// check if slot is already taken.. obviously
@@ -59,12 +80,22 @@ bool Reversi::is_valid_move(int x, int y, int player) const{
 	return (this->flip_count(x,y,player) > 0)?true:false;
 }
 
+/*
+ * set_slot()
+ *  Returns the staus/ownership of a slot
+ *
+ */
 void Reversi::set_slot(int x, int y, int player){
 	if(x >= this->size || y >= this->size || x < 0 || y < 0){ return; }
 	this->gameboard[x][y] = player;
 	this->change_score(1,player);
 }
 
+/*
+ * flip_count()
+ *  returns how many flips a move will make
+ *
+ */
 int Reversi::flip_count(int x, int y, int player) const{
 	if(x >= this->size || y >= this->size || x < 0 || y < 0){ return 0; }
 	// dir_x and dir_y are each -1, 0, or 1 to change the direction of the search
@@ -114,6 +145,11 @@ int Reversi::flip_count(int x, int y, int player) const{
 	return flip_count;
 }
 
+/*
+ * flip_slots()
+ *  Actually flips the slots of according to a move
+ *
+ */
 int Reversi::flip_slots(int x, int y, int player){
 	if(x >= this->size || y >= this->size || x < 0 || y < 0){ return 0; }
 	// see flip_count for comments..
@@ -150,6 +186,11 @@ int Reversi::flip_slots(int x, int y, int player){
 	return flip_count;
 }
 
+/*
+ * make_move()
+ *  makes the move based on a coordinate
+ *
+ */
 bool Reversi::make_move(int x, int y, int player){
 	if(x >= this->size || y >= this->size || x < 0 || y < 0){ return false; }
 	if(this->is_valid_move(x,y,player) == true){
@@ -161,6 +202,11 @@ bool Reversi::make_move(int x, int y, int player){
 	}
 }
 
+/*
+ * moves_exist()
+ *  returns whether there are any possible moves for a player left
+ *
+ */
 bool Reversi::moves_exist(int player) const{
 	int x,y;
 	for(x = 0; x < this->size; x++){
@@ -174,7 +220,11 @@ bool Reversi::moves_exist(int player) const{
 	return false;
 }
 
-// gets the user's input for a move
+/*
+ * get_move()
+ *  gets the user's input for a move
+ *
+ */
 bool Reversi::get_move(int player){
 	int x, y;
 	while(true){
@@ -218,15 +268,30 @@ bool Reversi::get_move(int player){
 	}
 }
 
+/*
+ * get_score()
+ *  returns the score of a player
+ *
+ */
 int Reversi::get_score(int player) const{
 	return this->score[player];
 }
 
-// returns the current status of the game
+/*
+ * get_status()
+ *  returns the current status of the game
+ *
+ */
 bool Reversi::get_status() const{
 	return this->status;
 }
 
+
+/*
+ * change_status()
+ *  toggles the status of the game
+ *
+ */
 // only two possibilities
 // therefore this function will only flip the current status of the game
 // 0 for over, 1 for still in progress
@@ -234,6 +299,11 @@ void Reversi::change_status(void){
 	this->status = (this->status == 0)?1:0;
 }
 
+/*
+ * count_free_slots()
+ *  returns the number of free slots on the game board
+ *
+ */
 // counts the number of 0's on the board
 int Reversi::count_free_slots() const{
 	int x,y, count = 0;
@@ -245,6 +315,11 @@ int Reversi::count_free_slots() const{
 	return count;
 }
 
+/*
+ * count_player_slots()
+ *  returns the number of slots owned by the player given
+ *
+ */
 int Reversi::count_player_slots(int player) const{
 	int x, y, count = 0;
 	for(x = 0; x < this->size; x++){
@@ -255,6 +330,11 @@ int Reversi::count_player_slots(int player) const{
 	return count;
 }
 
+/*
+ * check_win()
+ *  check whether a player has won
+ *
+ */
 bool Reversi::check_win(int player){
 	if(this->count_free_slots() == 0){
 		this->change_status();
@@ -267,6 +347,11 @@ bool Reversi::check_win(int player){
 	}
 }
 
+/*
+ * determine_winner()
+ *  determine who has won the game.
+ *
+ */
 int Reversi::determine_winner() const{
 	int p1 = 0, p2 = 0;
 	p1 = count_player_slots(1);
@@ -276,10 +361,20 @@ int Reversi::determine_winner() const{
 	else{ return 2; }
 }
 
+/*
+ * change_score()
+ *  change the score of a player
+ *
+ */
 void Reversi::change_score(int change, int player){
 	this->score[player] += change;
 }
 
+/*
+ * print_board()
+ *  dumps information about the current board
+ *
+ */
 // this function prints the current board
 void Reversi::print_board() const{
 	printf("  [<<] Current board:\n");
@@ -298,6 +393,11 @@ void Reversi::print_board() const{
 	printf("\n");
 }
 
+/*
+ * print_scores()
+ *  prints scores
+ *
+ */
 void Reversi::print_scores() const{
 	printf("[<<] Current stats:\n");
 	printf("  [<<] Player 1 score: %d\n",get_score(1));
@@ -305,5 +405,5 @@ void Reversi::print_scores() const{
 }
 
 Reversi::~Reversi() {
-
+    delete [] this->gameboard;
 }
