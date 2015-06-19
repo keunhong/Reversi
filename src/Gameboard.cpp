@@ -5,6 +5,7 @@
  *      Author: 1parkk
  */
 
+#include <cstdio>
 #include <iostream>
 #include "Gameboard.h"
 
